@@ -5,7 +5,6 @@ org\solent\com504\oodd\bank\model\dto\User.class
 org\solent\com504\oodd\bank\client\impl\BankRestClientImpl.class
 org\solent\com504\oodd\bank\model\client\BankRestClient.class
 org\solent\com504\oodd\bank\model\dto\TransactionReplyMessage.class
-.netbeans_automatic_build
 org\solent\com504\oodd\bank\model\dto\BankTransaction.class
 org\solent\com504\oodd\bank\model\dto\BankTransactionStatus.class
 org\solent\com504\oodd\password\PasswordUtils.class

@@ -47,7 +47,8 @@
                         <ul class="nav navbar-nav">
                             <li <% if ("home".equals(request.getAttribute("selectedPage"))) {%> class="active"  <% } %> ><a href="./home">Home</a></li> 
                             <li <% if ("about".equals(request.getAttribute("selectedPage"))) {%>  class="active"  <% } %> ><a href="./about">About</a></li> 
-                            <li <% if ("contact".equals(request.getAttribute("selectedPage"))) {%>  class="active"  <% }%> ><a href="./contact">Contact</a></li>                          
+                            <li <% if ("contact".equals(request.getAttribute("selectedPage"))) {%>  class="active"  <% }%> ><a href="./contact">Contact</a></li> 
+                            <li <% if ("catalogue".equals(request.getAttribute("selectedPage"))) {%>  class="active"  <% }%> ><a href="./catalogue">Catalogue</a></li> 
                                 <c:if test="${user.userRole =='ADMINISTRATOR'}">
                                 <li class="dropdown" >
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Admin <span class="caret"></span></a>

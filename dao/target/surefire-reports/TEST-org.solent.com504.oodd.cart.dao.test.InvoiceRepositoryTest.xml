@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="1" failures="0" name="org.solent.com504.oodd.cart.dao.test.InvoiceRepositoryTest" time="0.262" errors="0" skipped="0">
+<testsuite tests="1" failures="0" name="org.solent.com504.oodd.cart.dao.test.InvoiceRepositoryTest" time="0.274" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="java.vm.version" value="11.0.12+7-LTS"/>
     <property name="sun.boot.library.path" value="C:\Program Files\RedHat\java-11-openjdk-11.0.12-1\bin"/>
-    <property name="maven.multiModuleProjectDirectory" value="C:\com528AE2\session8\project-template\shopping-cart-application"/>
+    <property name="maven.multiModuleProjectDirectory" value="C:\com528AE2\ShoppingCart\Com528AE2\com528AE2"/>
     <property name="java.vm.vendor" value="Red Hat, Inc."/>
     <property name="java.vendor.url" value="https://access.redhat.com/"/>
     <property name="path.separator" value=";"/>
@@ -14,7 +14,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.script" value=""/>
     <property name="sun.os.patch.level" value=""/>
-    <property name="user.dir" value="C:\com528AE2\session8\project-template\shopping-cart-application"/>
+    <property name="user.dir" value="C:\com528AE2\ShoppingCart\Com528AE2\com528AE2"/>
     <property name="java.vm.compressedOopsMode" value="32-bit"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="java.runtime.version" value="11.0.12+7-LTS"/>
@@ -64,5 +64,5 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="org.solent.com504.oodd.cart.dao.test.InvoiceRepositoryTest" name="testInvoice" time="0.262"/>
+  <testcase classname="org.solent.com504.oodd.cart.dao.test.InvoiceRepositoryTest" name="testInvoice" time="0.274"/>
 </testsuite>
