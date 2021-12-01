@@ -19,5 +19,7 @@ public interface ShoppingService {
         public boolean purchaseItems(ShoppingCart shoppingCart);
         
         public ShoppingItem getNewItemByName(String uuid);
+        
+        public ShoppingItem addNewItem(ShoppingItem shoppingItem);
 
 }

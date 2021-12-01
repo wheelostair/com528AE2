@@ -73,10 +73,10 @@ public class PopulateDatabaseOnStart {
             LOG.info("defaultuser already exists. Not creating new :" + defaultUser);
         }
 
-        List<ShoppingItem> itemlist = Arrays.asList(new ShoppingItem("house", 20000.00),
-                new ShoppingItem("hen", 5.00),
-                new ShoppingItem("car", 5000.00),
-                new ShoppingItem("pet alligator", 65.00));
+        List<ShoppingItem> itemlist = Arrays.asList(new ShoppingItem("house", 20000.00,2),
+                new ShoppingItem("hen", 5.00,10),
+                new ShoppingItem("car", 5000.00,5),
+                new ShoppingItem("pet alligator", 65.00,2));
 
         for (ShoppingItem item : itemlist) {
             shoppingItemCatalogRepository.save(item);

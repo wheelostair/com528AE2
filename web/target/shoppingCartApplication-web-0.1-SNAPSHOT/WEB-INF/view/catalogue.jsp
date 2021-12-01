@@ -20,6 +20,10 @@
         <tr>
             <th>Item Name</th>
             <th>Price</th>
+            <th>Quantity in Stock</th>
+                <c:if test="${user.userRole =='ADMINISTRATOR'}">
+                <th>Activate / Deactivate</th>
+                </c:if>  
             <th></th>
         </tr>
 
@@ -28,9 +32,16 @@
             <tr>
                 <td>${item.name}</td>
                 <td>${item.price}</td>
-                <td>
-                    
-                </td>
+                <td>${item.stock}</td>
+                <c:if test="${user.userRole =='ADMINISTRATOR'}">
+                <form action="./catalogue" method="post">
+                    <input type="hidden" name="action" value="activateDeactivate">
+                    <td><button type="submit" >Activate / Deactivate</button></td>
+                </form>
+            </c:if>
+            <td>
+
+            </td>
 
             </tr>
 
@@ -40,8 +51,9 @@
             <p> Add New Item </p>
             <form action="./catalogue" method="post">
                 <input type="hidden" name="action" value="addNewItem">
-                <p>Item Name <input type="text" name="itemName" ></input></p>
+                <p>Item Name <input type="text" name="name" ></input></p>
                 <p>Price <input type="double" name="price" ></input></p>
+                <p>Stock Level <input type="integer" name="stock" ></input></p>
                 <p><button type="submit" >Add New Item</button></p>
             </form>
         </c:if>        

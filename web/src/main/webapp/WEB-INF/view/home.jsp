@@ -23,6 +23,7 @@
         <tr>
             <th>Item Name</th>
             <th>Price</th>
+            <th>Quantity in Stock</th>
             <th></th>
         </tr>
 
@@ -31,6 +32,7 @@
             <tr>
                 <td>${item.name}</td>
                 <td>${item.price}</td>
+                <td>${item.stock}</td>
                 <td></td>
                 <td>
                     <!-- post avoids url encoded parameters -->

@@ -54,14 +54,19 @@ public class ShoppingItemCatalogRepositoryTest {
         shoppingItem1.setName("item 1");
         shoppingItem1.setPrice(100.1);
         shoppingItem1.setQuantity(1);
+        shoppingItem1.setStock(11);
+
         shoppingItem1.setUuid(UUID.randomUUID().toString());
+         LOG.debug("before save shoppingItem1: " + shoppingItem1);
 
         shoppingItem1 = shoppingItemCatalogRepository.save(shoppingItem1);
+        LOG.debug("found  shoppingItem1: " + shoppingItem1);
 
         ShoppingItem shoppingItem2 = new ShoppingItem();
         shoppingItem2.setName("item 1");
         shoppingItem2.setPrice(100.1);
         shoppingItem2.setQuantity(1);
+        shoppingItem2.setStock(10);
         shoppingItem2.setUuid(UUID.randomUUID().toString());
 
         shoppingItem2 = shoppingItemCatalogRepository.save(shoppingItem2);
@@ -71,7 +76,7 @@ public class ShoppingItemCatalogRepositoryTest {
         Optional<ShoppingItem> optional = shoppingItemCatalogRepository.findById(shoppingItem2.getId());
         ShoppingItem foundItem = optional.get();
 
-        LOG.debug("found user: " + foundItem);
+        LOG.debug("found shoppingitem: " + foundItem);
 
         LOG.debug("****************** test complete");
     }

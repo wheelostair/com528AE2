@@ -36,17 +36,15 @@ public class ShoppingServiceImpl implements ShoppingService {
 //            new ShoppingItem("car", 5000.00),
 //            new ShoppingItem("pet alligator", 65.00)
 //    );
-
     public ShoppingServiceImpl() {
-        
+
     }
 
-        // initialised the hashmap
-       // for (ShoppingItem item : itemlist) {
-       //     itemMap.put(item.getName(), item);
-       // }
-   // }
-
+    // initialised the hashmap
+    // for (ShoppingItem item : itemlist) {
+    //     itemMap.put(item.getName(), item);
+    // }
+    // }
     @Override
     public List<ShoppingItem> getAvailableItems() {
         return shoppingItemCatalogRepository.findAll();
@@ -64,12 +62,12 @@ public class ShoppingServiceImpl implements ShoppingService {
 
     @Override
     public ShoppingItem getNewItemByName(String name) {
-        
-        ShoppingItem item=null;
-        List<ShoppingItem> items =shoppingItemCatalogRepository.getItemByName(name);
-        
-        if(!items.isEmpty()){
-             item = items.get(0);
+
+        ShoppingItem item = null;
+        List<ShoppingItem> items = shoppingItemCatalogRepository.getItemByName(name);
+
+        if (!items.isEmpty()) {
+            item = items.get(0);
         }
 
 //ShoppingItem templateItem = itemMap.get(name);
@@ -83,15 +81,28 @@ public class ShoppingServiceImpl implements ShoppingService {
 //        item.setUuid(UUID.randomUUID().toString());
         return item;
     }
-    
+
     @Transactional
     public ShoppingItem addNewItemByNamePrice(String name, Double price) {
-        ShoppingItem item=new ShoppingItem();
+        ShoppingItem item = new ShoppingItem();
         item.setName(name);
         item.setPrice(price);
         shoppingItemCatalogRepository.save(item);
-        
-       // List<ShoppingItem> items =shoppingItemCatalogRepository.addNewItemByNamePrice(name,price);
+
+        // List<ShoppingItem> items =shoppingItemCatalogRepository.addNewItemByNamePrice(name,price);
+        return item;
+    }
+
+    @Override
+    public ShoppingItem addNewItem(ShoppingItem shoppingItem) {
+
+        ShoppingItem item = null;
+        List<ShoppingItem> items = shoppingItemCatalogRepository.getItemByName(shoppingItem.getName());
+
+        if (!items.isEmpty()) {
+            throw new IllegalArgumentException("Item already in Database" + shoppingItem);
+        }
+        item = shoppingItemCatalogRepository.save(shoppingItem);
         return item;
     }
 }
