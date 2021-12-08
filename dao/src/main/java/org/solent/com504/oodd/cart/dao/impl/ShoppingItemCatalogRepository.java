@@ -9,10 +9,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ShoppingItemCatalogRepository  extends JpaRepository<ShoppingItem,Long>{
+public interface ShoppingItemCatalogRepository extends JpaRepository<ShoppingItem, Long> {
 
     @Query("select i from ShoppingItem i where i.name = :name")
-    public List<ShoppingItem> getItemByName (@Param ("name")String name);
+    public List<ShoppingItem> getItemByName(@Param("name") String name);
 
-  
+    @Query("select i from ShoppingItem i where i.active = true")
+    public List<ShoppingItem> getActivatedItems();
+
+    @Query("update ShoppingItem i set i.active = false where uuid = :uuid")
+    public List<ShoppingItem> deactivateItems(@Param("uuid") String uuid);
+
 }

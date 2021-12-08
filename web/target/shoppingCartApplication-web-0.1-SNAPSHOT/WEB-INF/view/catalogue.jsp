@@ -14,7 +14,7 @@
 <!-- Begin page content -->
 <main role="main" class="container">
 
-    <p> Item Size ${availableItemsSize} </p><!-- comment -->
+    <p> Total Amount of Items: ${availableItemsSize} </p><!-- comment -->
     <table class="table">
 
         <tr>
@@ -22,7 +22,8 @@
             <th>Price</th>
             <th>Quantity in Stock</th>
                 <c:if test="${user.userRole =='ADMINISTRATOR'}">
-                <th>Activate / Deactivate</th>
+                <th>Activate </th>
+                <th>Deactivate </th>
                 </c:if>  
             <th></th>
         </tr>
@@ -31,20 +32,33 @@
 
             <tr>
                 <td>${item.name}</td>
-                <td>${item.price}</td>
+                <td>£${item.price}</td>
                 <td>${item.stock}</td>
                 <c:if test="${user.userRole =='ADMINISTRATOR'}">
                 <form action="./catalogue" method="post">
-                    <input type="hidden" name="action" value="activateDeactivate">
-                    <td><button type="submit" >Activate / Deactivate</button></td>
+                    <input type="hidden" name="itemUUID" value="${item.uuid}">
+                    <input type="hidden" name="action" value="activate">
+                    <td><button type="submit" >Activate </button></td>
+
                 </form>
+                <form action="./catalogue" method="post">
+                    <input type="hidden" name="itemUUID" value="${item.uuid}">
+                    <input type="hidden" name="action" value="deactivate">
+                    <td><button type="submit" >Deactivate </button></td>
+
+                </form>
+                <c:if test="${ShoppingItem.active == true}">
+                    <td> Item Active</td>
+                </c:if>
+                <c:if test="${ShoppingItem.active == false}">
+                    <td> Item Deactivated </td>    
+                </c:if>
+                <td>
+
+                </td>
+
+                </tr>
             </c:if>
-            <td>
-
-            </td>
-
-            </tr>
-
         </c:forEach>
 
         <c:if test="${user.userRole =='ADMINISTRATOR'}">

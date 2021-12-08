@@ -15,6 +15,7 @@ import org.solent.com504.oodd.cart.dao.impl.UserRepository;
 import org.solent.com504.oodd.cart.model.dto.ShoppingItem;
 import org.solent.com504.oodd.cart.model.dto.User;
 import org.solent.com504.oodd.cart.model.dto.UserRole;
+import org.solent.com504.oodd.bank.model.dto.CreditCard;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -73,14 +74,21 @@ public class PopulateDatabaseOnStart {
             LOG.info("defaultuser already exists. Not creating new :" + defaultUser);
         }
 
-        List<ShoppingItem> itemlist = Arrays.asList(new ShoppingItem("house", 20000.00,2),
-                new ShoppingItem("hen", 5.00,10),
-                new ShoppingItem("car", 5000.00,5),
-                new ShoppingItem("pet alligator", 65.00,2));
+        List<ShoppingItem> itemlist = Arrays.asList(new ShoppingItem("house", 20000.00, 2),
+                new ShoppingItem("hen", 5.00, 10),
+                new ShoppingItem("car", 5000.00, 5),
+                new ShoppingItem("pet alligator", 65.00, 2));
 
         for (ShoppingItem item : itemlist) {
             shoppingItemCatalogRepository.save(item);
         }
+
+        // Create to card data
+        CreditCard toCard = new CreditCard();
+        toCard.setEndDate("11/21");
+        toCard.setCardnumber("4285860000000021");
+        toCard.setCvv("123");
+        toCard.setIssueNumber("01");
 
         LOG.debug("database initialised");
     }

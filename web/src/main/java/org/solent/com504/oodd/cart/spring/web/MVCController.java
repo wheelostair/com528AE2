@@ -43,7 +43,7 @@ public class MVCController {
             sessionUser = new User();
             sessionUser.setUsername("anonymous");
             sessionUser.setUserRole(UserRole.ANONYMOUS);
-            session.setAttribute("sessionUser",sessionUser);
+            session.setAttribute("sessionUser", sessionUser);
         }
         return sessionUser;
     }
@@ -93,6 +93,10 @@ public class MVCController {
         } else if ("removeItemFromCart".equals(action)) {
             message = "removed " + itemName + " from cart";
             shoppingCart.removeItemFromCart(itemUuid);
+
+        } else if ("addItemsToBasket".equals(action)) {
+            message = "Added " + itemName + " to basket";
+            shoppingCart.removeItemFromCart(itemUuid);
         } else {
             message = "unknown action=" + action;
         }
@@ -119,7 +123,7 @@ public class MVCController {
         // get sessionUser from session
         User user = getSessionUser(session);
         model.addAttribute("user", user);
-        
+
         // used to set tab selected
         model.addAttribute("selectedPage", "about");
         return "about";
@@ -131,12 +135,54 @@ public class MVCController {
         // get sessionUser from session
         User user = getSessionUser(session);
         model.addAttribute("user", user);
-        
+
         // used to set tab selected
         model.addAttribute("selectedPage", "contact");
         return "contact";
     }
 
+    @RequestMapping(value = "/basket", method = {RequestMethod.GET, RequestMethod.POST})
+    public String basketCart(@RequestParam(name = "action", required = false) String action,
+            @RequestParam(name = "itemName", required = false) String itemName,
+            @RequestParam(name = "itemUUID", required = false) String itemUuid,
+            Model model,
+            HttpSession session
+    ) {
+
+        // get sessionUser from session
+        User user = getSessionUser(session);
+        model.addAttribute("user", user);
+
+        // used to set tab selected
+        model.addAttribute("selectedPage", "basket");
+
+        String message = "";
+        String errorMessage = "";
+
+        List<ShoppingItem> shoppingCartItems = shoppingCart.getShoppingCartItems();
+
+        Double shoppingcartTotal = shoppingCart.getTotal();
+
+        // populate model with values
+        model.addAttribute("shoppingCartItems", shoppingCartItems);
+        model.addAttribute("shoppingcartTotal", shoppingcartTotal);
+        model.addAttribute("message", message);
+        model.addAttribute("errorMessage", errorMessage);
+
+        return "basket";
+    }
+    
+    @RequestMapping(value = "/orders", method = {RequestMethod.GET, RequestMethod.POST})
+    public String ordersCart(Model model, HttpSession session) {
+
+        // get sessionUser from session
+        User user = getSessionUser(session);
+        model.addAttribute("user", user);
+
+        // used to set tab selected
+        model.addAttribute("selectedPage", "about");
+        return "orders";
+    }
 
     /*
      * Default exception handler, catches all exceptions, redirects to friendly
@@ -159,5 +205,4 @@ public class MVCController {
         //logger.error(strStackTrace); // send to logger first
         return "error"; // default friendly exception message for sessionUser
     }
-
 }

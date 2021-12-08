@@ -39,7 +39,7 @@
                     <form action="./home" method="get">
                         <input type="hidden" name="itemName" value="${item.name}">
                         <input type="hidden" name="action" value="addItemToCart">
-                        <button type="submit" >Add Item</button>
+                        <button type="submit" >Add ${item.name}</button>
                     </form> 
                 </td>
             </tr>
@@ -76,6 +76,7 @@
         <tr>
             <td>TOTAL</td>
             <td>${shoppingcartTotal}</td>
+
         </tr>
     </table>
 

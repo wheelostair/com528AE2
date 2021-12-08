@@ -105,4 +105,20 @@ public class ShoppingServiceImpl implements ShoppingService {
         item = shoppingItemCatalogRepository.save(shoppingItem);
         return item;
     }
+
+    @Override
+    public List<ShoppingItem> getActivatedItems() {
+
+        List<ShoppingItem> items = shoppingItemCatalogRepository.getActivatedItems();
+
+        return items;
+    }
+
+    @Override
+    public void deactivateItems(String uuid) {
+        
+        shoppingItemCatalogRepository.deactivateItems(uuid);
+        
+        
+    }
 }

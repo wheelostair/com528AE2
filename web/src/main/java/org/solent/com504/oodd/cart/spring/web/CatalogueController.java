@@ -1,7 +1,9 @@
 package org.solent.com504.oodd.cart.spring.web;
 
+import java.io.Console;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import static java.lang.System.console;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -58,6 +60,9 @@ public class CatalogueController {
             @RequestParam(value = "price", required = false) Double price,
             @RequestParam(value = "stock", required = false) Integer stock,
             @RequestParam(value = "action", required = false) String action,
+            @RequestParam(name = "itemName", required = false) String itemName,
+            @RequestParam(name = "itemUUID", required = false) String itemUuid,
+            @RequestParam(name = "username", required = false) String userName,
             Model model, HttpSession session) {
         String errorMessage = "";
         String message = "";
@@ -87,16 +92,33 @@ public class CatalogueController {
 
             }
         }
-        if ("activateDeactivate".equals(action)) {
-           try {
-                    
-                    
-                } catch (Exception ex) {
-                    errorMessage = "problem activating / deactivating item." + ex.getMessage();
-                }
-                    }
+        if ("activate".equals(action)) {
+            try {
+                
+                
+                LOG.debug("Item Activated: " + itemName);
 
-        availableItems = shoppingService.getAvailableItems();
+            } catch (Exception ex) {
+                errorMessage = "problem activating item." + ex.getMessage();
+            }
+        }
+
+        if ("deactivate".equals(action)) {
+            try {
+
+                shoppingService.deactivateItems(itemUuid);
+                LOG.debug("Item Deactivated: " + itemName);
+
+            } catch (Exception ex) {
+                errorMessage = "problem deactivating item." + ex.getMessage();
+            }
+        }
+        if (user.getUserRole() == UserRole.ADMINISTRATOR) {
+            availableItems = shoppingService.getAvailableItems();
+        }
+        if (user.getUserRole() != UserRole.ADMINISTRATOR) {
+            availableItems = shoppingService.getActivatedItems();
+        }
 
         int availableItemsSize = availableItems.size();
         // used to set tab selected
