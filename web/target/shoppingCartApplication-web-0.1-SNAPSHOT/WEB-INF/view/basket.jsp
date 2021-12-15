@@ -48,13 +48,14 @@
 
         <td>
             <H1>Card Details</H1>
-            <form action="./payment" method="post">
+            <form action="./basket" method="post">
                 <input type="hidden" name="action" value="payment">
                 <p>Name <input type="text" name="name" ></input></p>
                 <p>End Date <input type="text" name="endDate" ></input></p>
                 <p>Card Number <input type="text" name="cardnumber" ></input></p>
                 <p>CVV <input type="text" name="cvv" ></input></p>
                 <p>Issue Number <input type="text" name="issueNumber" ></input></p>
+                <p>Total £${shoppingcartTotal} </p>
                 <p><button type="submit" >Purchase</button></p>
             </form>
             

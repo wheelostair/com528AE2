@@ -16,10 +16,12 @@ public interface ShoppingCart {
 
     public List<ShoppingItem> getShoppingCartItems();
     
-    public void addItemToCart(ShoppingItem shoppingItem);
+    public boolean addItemToCart(ShoppingItem shoppingItem);
     
     public void removeItemFromCart(String itemUuid);
     
     public double getTotal();
+    
+    public void removeStock();
     
 }

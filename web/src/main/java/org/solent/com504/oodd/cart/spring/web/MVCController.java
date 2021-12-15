@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.solent.com504.oodd.bank.model.dto.CreditCard;
+import org.solent.com504.oodd.bank.model.dto.TransactionRequestMessage;
 import org.solent.com504.oodd.cart.model.dto.ShoppingItem;
 import org.solent.com504.oodd.cart.model.dto.User;
 import org.solent.com504.oodd.cart.model.dto.UserRole;
@@ -36,6 +38,10 @@ public class MVCController {
     // so the shopping cart is unique for each web session
     @Autowired
     ShoppingCart shoppingCart = null;
+
+//    
+//    @Autowired
+//    TransactionRequestMessage transacetionRequestMessage = null;
 
     private User getSessionUser(HttpSession session) {
         User sessionUser = (User) session.getAttribute("sessionUser");
@@ -84,11 +90,15 @@ public class MVCController {
             // do nothing but show page
         } else if ("addItemToCart".equals(action)) {
             ShoppingItem shoppingItem = shoppingService.getNewItemByName(itemName);
+
+            LOG.debug("Quantity" + shoppingItem.getQuantity() + "Stock" + shoppingItem.getStock());
             if (shoppingItem == null) {
                 message = "cannot add unknown " + itemName + " to cart";
+            } else if (shoppingCart.addItemToCart(shoppingItem) == false) {
+                message = "Not enough " + itemName + " to purchase";
             } else {
                 message = "adding " + itemName + " to cart price= " + shoppingItem.getPrice();
-                shoppingCart.addItemToCart(shoppingItem);
+
             }
         } else if ("removeItemFromCart".equals(action)) {
             message = "removed " + itemName + " from cart";
@@ -145,6 +155,10 @@ public class MVCController {
     public String basketCart(@RequestParam(name = "action", required = false) String action,
             @RequestParam(name = "itemName", required = false) String itemName,
             @RequestParam(name = "itemUUID", required = false) String itemUuid,
+            @RequestParam(name = "endDate", required = false) String endDate,
+            @RequestParam(name = "cardnumber", required = false) String cardNumber,
+            @RequestParam(name = "cvv", required = false) String cvv,
+            @RequestParam(name = "issueNumber", required = false) String issueNumber,
             Model model,
             HttpSession session
     ) {
@@ -169,18 +183,37 @@ public class MVCController {
         model.addAttribute("message", message);
         model.addAttribute("errorMessage", errorMessage);
 
+        CreditCard fromCard = new CreditCard();
+        fromCard.setEndDate("");
+        fromCard.setCardnumber("");
+        fromCard.setCvv("");
+        fromCard.setIssueNumber("");
+
+        if (action == null) {
+            // do nothing but show page
+        } else if ("payment".equals(action)) {
+            fromCard.setEndDate(endDate);
+            fromCard.setCardnumber(cardNumber);
+            fromCard.setCvv(cvv);
+            fromCard.setIssueNumber(issueNumber);
+            LOG.debug("card number: " + fromCard.getCardnumber());
+        }
         return "basket";
     }
-    
+
     @RequestMapping(value = "/orders", method = {RequestMethod.GET, RequestMethod.POST})
-    public String ordersCart(Model model, HttpSession session) {
+    public String ordersCart(
+            Model model, HttpSession session) {
 
         // get sessionUser from session
         User user = getSessionUser(session);
         model.addAttribute("user", user);
 
         // used to set tab selected
-        model.addAttribute("selectedPage", "about");
+        model.addAttribute("selectedPage", "orders");
+
+        
+
         return "orders";
     }
 
