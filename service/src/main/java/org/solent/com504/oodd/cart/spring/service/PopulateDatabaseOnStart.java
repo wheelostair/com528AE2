@@ -16,6 +16,7 @@ import org.solent.com504.oodd.cart.model.dto.ShoppingItem;
 import org.solent.com504.oodd.cart.model.dto.User;
 import org.solent.com504.oodd.cart.model.dto.UserRole;
 import org.solent.com504.oodd.bank.model.dto.CreditCard;
+import org.solent.com504.oodd.bank.client.impl.BankRestClientImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -89,6 +90,11 @@ public class PopulateDatabaseOnStart {
         toCard.setCardnumber("4285860000000021");
         toCard.setCvv("123");
         toCard.setIssueNumber("01");
+        
+        String urlStr;
+        urlStr = "http://com528bank.ukwest.cloudapp.azure.com:8080";
+        
+       
 
         LOG.debug("database initialised");
     }

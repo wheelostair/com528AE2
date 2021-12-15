@@ -9,11 +9,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.solent.com504.oodd.bank.model.dto.CreditCard;
 import org.solent.com504.oodd.bank.model.dto.TransactionRequestMessage;
+import org.solent.com504.oodd.bank.model.dto.BankTransactionStatus;
+import org.solent.com504.oodd.bank.model.dto.TransactionReplyMessage;
+import org.solent.com504.oodd.bank.model.client.BankRestClient;
+import org.solent.com504.oodd.bank.client.impl.BankRestClientImpl;
 import org.solent.com504.oodd.cart.model.dto.ShoppingItem;
 import org.solent.com504.oodd.cart.model.dto.User;
 import org.solent.com504.oodd.cart.model.dto.UserRole;
 import org.solent.com504.oodd.cart.model.service.ShoppingCart;
 import org.solent.com504.oodd.cart.model.service.ShoppingService;
+import org.solent.com504.oodd.cart.spring.service.PopulateDatabaseOnStart;
 import org.solent.com504.oodd.cart.web.WebObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,7 +47,6 @@ public class MVCController {
 //    
 //    @Autowired
 //    TransactionRequestMessage transacetionRequestMessage = null;
-
     private User getSessionUser(HttpSession session) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         if (sessionUser == null) {
@@ -189,6 +193,12 @@ public class MVCController {
         fromCard.setCvv("");
         fromCard.setIssueNumber("");
 
+        CreditCard toCard = new CreditCard();
+        toCard.setEndDate("11/21");
+        toCard.setCardnumber("4285860000000021");
+        toCard.setCvv("123");
+        toCard.setIssueNumber("01");
+
         if (action == null) {
             // do nothing but show page
         } else if ("payment".equals(action)) {
@@ -197,6 +207,14 @@ public class MVCController {
             fromCard.setCvv(cvv);
             fromCard.setIssueNumber(issueNumber);
             LOG.debug("card number: " + fromCard.getCardnumber());
+
+            BankRestClient client = new BankRestClientImpl("http://com528bank.ukwest.cloudapp.azure.com:8080/rest");
+            {
+                Double amount = shoppingCart.getTotal();
+                LOG.debug("amount: " + amount);
+                TransactionReplyMessage result = client.transferMoney(toCard, fromCard, amount);
+                message = "Transaction" + result;
+            }
         }
         return "basket";
     }
@@ -211,8 +229,6 @@ public class MVCController {
 
         // used to set tab selected
         model.addAttribute("selectedPage", "orders");
-
-        
 
         return "orders";
     }
