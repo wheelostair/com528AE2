@@ -5,7 +5,6 @@
  */
 package org.solent.com504.oodd.cart.service;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,11 +17,8 @@ import org.apache.logging.log4j.Logger;
  *
  * @author cgallen
  */
-
-
-        
 public class ShoppingCartImpl implements ShoppingCart {
-    
+
     final static Logger LOG = LogManager.getLogger(ShoppingCartImpl.class);
 
     private HashMap<String, ShoppingItem> itemMap = new HashMap<String, ShoppingItem>();
@@ -40,29 +36,29 @@ public class ShoppingCartImpl implements ShoppingCart {
     @Override
     public boolean addItemToCart(ShoppingItem shoppingItem) {
         // itemMap.put(shoppingItem.getUuid(), shoppingItem);
-        
+
         // ANSWER
         boolean itemExists = false;
         for (String itemUUID : itemMap.keySet()) {
             ShoppingItem shoppingCartItem = itemMap.get(itemUUID);
-            if (shoppingCartItem.getName().equals(shoppingItem.getName())){
+            if (shoppingCartItem.getName().equals(shoppingItem.getName())) {
                 Integer q = shoppingCartItem.getQuantity();
                 Integer s = shoppingCartItem.getStock();
-                LOG.debug( "q: " +q + "s: " +s);
-                if (q+1 > s){return false;
+                LOG.debug("q: " + q + "s: " + s);
+                if (q + 1 > s) {
+                    return false;
                 }
-                shoppingCartItem.setQuantity(q+1);
+                shoppingCartItem.setQuantity(q + 1);
                 itemExists = true;
                 break;
             }
         }
-        if (!itemExists){
+        if (!itemExists) {
             shoppingItem.setQuantity(1);
             itemMap.put(shoppingItem.getUuid(), shoppingItem);
         }
         return true;
     }
-    
 
     @Override
     public void removeItemFromCart(String itemUuid) {
@@ -86,9 +82,13 @@ public class ShoppingCartImpl implements ShoppingCart {
 
     }
 
-    @Override
-    public void removeStock() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void removeStock(String itemUuid) {
+        for (String itemUUID : itemMap.keySet()) {
+            ShoppingItem shoppingCartItem = itemMap.get(itemUUID);
+
+            shoppingCartItem.setStock(-shoppingCartItem.getQuantity());
+
+        }
     }
 
 }

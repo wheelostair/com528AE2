@@ -13,6 +13,10 @@
 <!-- Begin page content -->
 <main role="main" class="container">
     <H1>About</H1>
+    
+    <P>Soccer City is a small independent football store based in the UK. </P>
+    
+    <P>Thanks for Shopping with us. </P>
 </main>
 
 

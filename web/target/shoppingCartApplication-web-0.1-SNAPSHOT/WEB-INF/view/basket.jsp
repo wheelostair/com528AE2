@@ -14,6 +14,11 @@
 <jsp:include page="header.jsp" />
 <!-- Begin page content -->
 <main role="main" class="container">
+    
+    <div style="color:red;">${errorMessage}</div>
+    <div style="color:green;">${message}</div>
+    
+    
     <H1>Shopping Basket</H1>
     <table class="table">
 
@@ -31,7 +36,7 @@
                 <td>${item.quantity}</td>
                 <td>
                     <!-- post avoids url encoded parameters -->
-                    <form action="./home" method="post">
+                    <form action="./basket" method="post">
                         <input type="hidden" name="itemUUID" value="${item.uuid}">
                         <input type="hidden" name="itemName" value="${item.name}">
                         <input type="hidden" name="action" value="removeItemFromCart">
@@ -45,25 +50,25 @@
             <td>£${shoppingcartTotal}</td>
         </tr>
         </td>
+        
+            <td>
+                <H1>Card Details</H1>
+                <form action="./basket" method="post">
+                    <input type="hidden" name="action" value="payment">
+                    <p>Name <input type="text" value="${user.firstName}" name="name" ></input></p>
+                    <p>End Date <input type="text" value="${user.endDate}" name="endDate" ></input></p>
+                    <p>Card Number <input type="text" value="${user.cardNumber}" name="cardnumber" ></input></p>
+                    <p>CVV <input type="text" name="cvv" ></input></p>
+                    <p>Issue Number <input type="text" value="${user.issueNumber}" name="issueNumber" ></input></p>
+                    <p>Total £${shoppingcartTotal} </p>
+                    <p><button type="submit" >Purchase</button></p>
+                </form>
 
-        <td>
-            <H1>Card Details</H1>
-            <form action="./basket" method="post">
-                <input type="hidden" name="action" value="payment">
-                <p>Name <input type="text" name="name" ></input></p>
-                <p>End Date <input type="text" name="endDate" ></input></p>
-                <p>Card Number <input type="text" name="cardnumber" ></input></p>
-                <p>CVV <input type="text" name="cvv" ></input></p>
-                <p>Issue Number <input type="text" name="issueNumber" ></input></p>
-                <p>Total £${shoppingcartTotal} </p>
-                <p><button type="submit" >Purchase</button></p>
-            </form>
-            
-            
 
-        </td>
-    </table>
 
-</main>
+            </td>
+        </table>
 
-<jsp:include page="footer.jsp" />
+    </main>
+
+    <jsp:include page="footer.jsp" />

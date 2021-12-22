@@ -22,6 +22,6 @@ public interface ShoppingCart {
     
     public double getTotal();
     
-    public void removeStock();
+    public void removeStock(String itemUuid);
     
 }

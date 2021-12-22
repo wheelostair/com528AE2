@@ -284,6 +284,9 @@ public class UserAndLoginController {
             @RequestParam(value = "longitude", required = false) String longitude,
             @RequestParam(value = "telephone", required = false) String telephone,
             @RequestParam(value = "mobile", required = false) String mobile,
+            @RequestParam(value = "cardNumber", required = false) String cardNumber,
+            @RequestParam(value = "endDate", required = false) String endDate,
+            @RequestParam(value = "issueNumber", required = false) String issueNumber,
             @RequestParam(value = "password", required = false) String password,
             @RequestParam(value = "password2", required = false) String password2,
             @RequestParam(value = "action", required = false) String action,
@@ -342,7 +345,7 @@ public class UserAndLoginController {
             }
         }
 
-        // else uopdate all other properties
+        // else update all other properties
         // only admin can update user role
         if (UserRole.ADMINISTRATOR.equals(sessionUser.getUserRole())) {
             try {
@@ -378,6 +381,10 @@ public class UserAndLoginController {
         address.setTelephone(telephone);
 
         user.setAddress(address);
+        
+        user.setCardNumber(cardNumber);
+        user.setEndDate(endDate);
+        user.setIssueNumber(issueNumber);
 
         user = userRepository.save(user);
 

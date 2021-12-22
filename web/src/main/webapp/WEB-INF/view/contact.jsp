@@ -13,6 +13,8 @@
 <!-- Begin page content -->
 <main role="main" class="container">
     <H1>Contact</H1>
+    
+    <P>To contact Soccer City please email soccer@city.co.uk </P>
 </main>
 
 

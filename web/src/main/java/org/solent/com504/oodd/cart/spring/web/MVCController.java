@@ -13,6 +13,7 @@ import org.solent.com504.oodd.bank.model.dto.BankTransactionStatus;
 import org.solent.com504.oodd.bank.model.dto.TransactionReplyMessage;
 import org.solent.com504.oodd.bank.model.client.BankRestClient;
 import org.solent.com504.oodd.bank.client.impl.BankRestClientImpl;
+import org.solent.com504.oodd.bank.model.dto.BankTransaction;
 import org.solent.com504.oodd.cart.model.dto.ShoppingItem;
 import org.solent.com504.oodd.cart.model.dto.User;
 import org.solent.com504.oodd.cart.model.dto.UserRole;
@@ -181,12 +182,6 @@ public class MVCController {
 
         Double shoppingcartTotal = shoppingCart.getTotal();
 
-        // populate model with values
-        model.addAttribute("shoppingCartItems", shoppingCartItems);
-        model.addAttribute("shoppingcartTotal", shoppingcartTotal);
-        model.addAttribute("message", message);
-        model.addAttribute("errorMessage", errorMessage);
-
         CreditCard fromCard = new CreditCard();
         fromCard.setEndDate("");
         fromCard.setCardnumber("");
@@ -201,6 +196,11 @@ public class MVCController {
 
         if (action == null) {
             // do nothing but show page
+        } else if ("removeItemFromCart".equals(action)) {
+            message = "removed " + itemName + " from cart";
+            shoppingCart.removeItemFromCart(itemUuid);
+            LOG.debug("Item Removed");
+
         } else if ("payment".equals(action)) {
             fromCard.setEndDate(endDate);
             fromCard.setCardnumber(cardNumber);
@@ -209,19 +209,37 @@ public class MVCController {
             LOG.debug("card number: " + fromCard.getCardnumber());
 
             BankRestClient client = new BankRestClientImpl("http://com528bank.ukwest.cloudapp.azure.com:8080/rest");
+
             {
                 Double amount = shoppingCart.getTotal();
                 LOG.debug("amount: " + amount);
                 TransactionReplyMessage result = client.transferMoney(toCard, fromCard, amount);
                 message = "Transaction" + result;
             }
+//            if (BankTransaction.BankTransactionStatus == "SUCCESS") {
+//                shoppingCartItems.removeAll(shoppingCartItems);
+//            } else {
+//                message = "unknown action=" + action;
+//            }
         }
+
+        // populate model with values
+        model.addAttribute(
+                "shoppingCartItems", shoppingCartItems);
+        model.addAttribute(
+                "shoppingcartTotal", shoppingcartTotal);
+        model.addAttribute(
+                "message", message);
+        model.addAttribute(
+                "errorMessage", errorMessage);
+
         return "basket";
     }
 
     @RequestMapping(value = "/orders", method = {RequestMethod.GET, RequestMethod.POST})
     public String ordersCart(
-            Model model, HttpSession session) {
+            Model model, HttpSession session
+    ) {
 
         // get sessionUser from session
         User user = getSessionUser(session);
@@ -238,7 +256,9 @@ public class MVCController {
      * error page. Does not catch request mapping errors
      */
     @ExceptionHandler(Exception.class)
-    public String myExceptionHandler(final Exception e, Model model, HttpServletRequest request) {
+    public String myExceptionHandler(final Exception e, Model model,
+            HttpServletRequest request
+    ) {
         final StringWriter sw = new StringWriter();
         final PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);

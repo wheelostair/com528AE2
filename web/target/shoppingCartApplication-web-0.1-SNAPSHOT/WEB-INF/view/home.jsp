@@ -13,7 +13,7 @@
 <jsp:include page="header.jsp" />
 <!-- Begin page content -->
 <main role="main" class="container">
-    <H1>Home</H1>
+    
     <div style="color:red;">${errorMessage}</div>
     <div style="color:green;">${message}</div>
 
@@ -68,9 +68,11 @@
                         <input type="hidden" name="itemUUID" value="${item.uuid}">
                         <input type="hidden" name="itemName" value="${item.name}">
                         <input type="hidden" name="action" value="removeItemFromCart">
-                        <button type="submit" >Remove Item</button>
+                        <button type="submit" >Remove ${item.name}</button>
                     </form> 
+
                 </td>
+                
             </tr>
         </c:forEach>
         <tr>
@@ -78,6 +80,7 @@
             <td>${shoppingcartTotal}</td>
 
         </tr>
+        <td> <H1><a href="./basket">To the Basket</a></td></H1>
     </table>
 
 

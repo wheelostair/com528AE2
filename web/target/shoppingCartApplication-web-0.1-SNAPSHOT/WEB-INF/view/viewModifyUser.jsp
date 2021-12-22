@@ -77,6 +77,18 @@
                         <td>mobile</td>
                         <td><input type="text" name="mobile" value="${user.address.mobile}" /></td>
                     </tr>
+                    <tr>
+                        <td>card number</td>
+                        <td><input type="text" name="cardNumber" value="${user.cardNumber}" /></td>
+                    </tr>
+                    <tr>
+                        <td>end date</td>
+                        <td><input type="text" name="endDate" value="${user.endDate}" /></td>
+                    </tr>
+                    <tr>
+                        <td>issue number</td>
+                        <td><input type="text" name="issueNumber" value="${user.issueNumber}" /></td>
+                    </tr>
 
                 </tbody>
 
