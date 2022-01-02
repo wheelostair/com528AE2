@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="dao">
+  <ClassDiagramComponents>
+    <Class name="PersistenceJPAConfig" package="org.solent.com504.oodd.cart.dao.impl" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields>
+        <Field name="env" type="Environment" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="entityManagerFactory" returnType="LocalContainerEntityManagerFactoryBean" visibility="public"/>
+        <Method name="dataSource" returnType="DataSource" visibility="public"/>
+        <Method name="transactionManager" returnType="PlatformTransactionManager" visibility="public"/>
+        <Method name="exceptionTranslation" returnType="PersistenceExceptionTranslationPostProcessor" visibility="public"/>
+        <Method name="additionalProperties" returnType="Properties" visibility="package" isFinal="true"/>
+      </Methods>
+    </Class>
+    <Interface name="InvoiceRepository" package="org.solent.com504.oodd.cart.dao.impl" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Methods/>
+    </Interface>
+    <Interface name="ShoppingItemCatalogRepository" package="org.solent.com504.oodd.cart.dao.impl" visibility="public" xPosition="38.0" yPosition="264.0">
+      <Methods>
+        <Method name="getItemByName" returnType="List&lt;ShoppingItem&gt;" visibility="public">
+          <Argument type="String" name="name"/>
+        </Method>
+        <Method name="getActivatedItems" returnType="List&lt;ShoppingItem&gt;" visibility="public"/>
+        <Method name="deactivateItems" returnType="List&lt;ShoppingItem&gt;" visibility="public">
+          <Argument type="String" name="uuid"/>
+        </Method>
+        <Method name="removeStock" returnType="void" visibility="public">
+          <Argument type="String" name="name"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Interface name="UserRepository" package="org.solent.com504.oodd.cart.dao.impl" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Methods>
+        <Method name="findByUsername" returnType="List&lt;User&gt;" visibility="public">
+          <Argument type="String" name="username"/>
+        </Method>
+        <Method name="findByNames" returnType="List&lt;User&gt;" visibility="public">
+          <Argument type="String" name="firstName"/>
+          <Argument type="String" name="secondName"/>
+        </Method>
+      </Methods>
+    </Interface>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations/>
+</ClassDiagram>

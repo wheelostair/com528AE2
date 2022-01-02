@@ -18,6 +18,7 @@ import org.solent.com504.oodd.cart.model.dto.ShoppingItem;
 import org.solent.com504.oodd.cart.model.dto.User;
 import org.solent.com504.oodd.cart.model.dto.UserRole;
 import org.solent.com504.oodd.cart.model.service.ShoppingCart;
+import org.solent.com504.oodd.cart.service.ShoppingCartImpl;
 import org.solent.com504.oodd.cart.model.service.ShoppingService;
 import org.solent.com504.oodd.cart.spring.service.PopulateDatabaseOnStart;
 import org.solent.com504.oodd.cart.web.WebObjectFactory;
@@ -216,6 +217,19 @@ public class MVCController {
                 TransactionReplyMessage result = client.transferMoney(toCard, fromCard, amount);
                 message = "Transaction" + result;
             }
+
+            if (message.contains("SUCCESS")) 
+            {shoppingCart.removeStock(itemName);
+            String reciept = shoppingCartItems.toString();
+            LOG.debug(reciept);
+            
+            
+            };
+
+            
+
+            
+
 //            if (BankTransaction.BankTransactionStatus == "SUCCESS") {
 //                shoppingCartItems.removeAll(shoppingCartItems);
 //            } else {

@@ -14,6 +14,10 @@
 <!-- Begin page content -->
 <main role="main" class="container">
     <H1>Orders</H1>
+
+    <p>${user.firstName} ${user.secondName}</p>
+
+    <p>${reciept}</p>
 </main>
 
 
