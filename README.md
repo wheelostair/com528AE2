@@ -14,7 +14,7 @@ move to web module and run project
 cd web
 mvn spring-boot:run
 ```
-the project will be served at http://localhost:8080/index.html
+the project will be served at http://localhost:8080/shoppingCartApplication/index.html
 
 
 
