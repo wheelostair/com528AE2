@@ -16,8 +16,10 @@
     <H1>Orders</H1>
 
     <p>${user.firstName} ${user.secondName}</p>
+    
+    <p>Previous Orders</p>
 
-    <p>${reciept}</p>
+    <p>${customerReciept}</p>
 </main>
 
 

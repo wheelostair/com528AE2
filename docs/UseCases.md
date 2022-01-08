@@ -46,6 +46,17 @@
 | **Alternative Flows:** | 
 | **Exceptions:**        | 
 | **Requirements:**      | Customers Card details shows on Basket page when trying to pay. 
+### Admin Adds new items
+|                        |      |
+| :---                   | :--- |
+| **Description:**       | Admin Adds new items for sale     
+| **Actors:**            | Admin
+| **Preconditions:**     | Item does not yet exist
+| **Postconditions:**    | New Item available for sale
+| **Flow:**              | Admin enters new item name and stock leve and price on Catalogue page
+| **Alternative Flows:** | 
+| **Exceptions:**        | 
+| **Requirements:**      | New item available for sale
 ### Choosing Items for basket
 |                        |      |
 | :---                   | :--- |
@@ -60,14 +71,25 @@
 ### Purcahsing Items
 |                        |      |
 | :---                   | :--- |
-| **Description:**       | Items paid for, Money transfered to/from bank and stock decremented    
+| **Description:**       | Items paid for, Money transfered to/from bank    
 | **Actors:**            | customer
 | **Preconditions:**     | Items in basket
-| **Postconditions:**    | Itmes paid for, bank transfer completed and stock decresed
+| **Postconditions:**    | Items paid for, bank transfer completed 
 | **Flow:**              | Customer enteres CVV and clicks purchase
 | **Alternative Flows:** | 
 | **Exceptions:**        | customer enters wrong details
-| **Requirements:**      | available money in bank, available stock
+| **Requirements:**      | available money in bank
+### Stock Levels Decrease
+|                        |      |
+| :---                   | :--- |
+| **Description:**       | When transaction successful stock levels decrease    
+| **Actors:**            | customer
+| **Preconditions:**     | Transaction successful
+| **Postconditions:**    | Stock levels decrease 
+| **Flow:**              | Check catalogue page after sale to see stock level decrease
+| **Alternative Flows:** | 
+| **Exceptions:**        | 
+| **Requirements:**      | Stock available
 ### Customer/Admin Views orders
 |                        |      |
 | :---                   | :--- |
@@ -90,15 +112,5 @@
 | **Alternative Flows:** | Alternative Flows
 | **Exceptions:**        | Execptions
 | **Requirements:**      | Money transfered from owner to Customer
-### Refund of transation failed
-|                        |      |
-| :---                   | :--- |
-| **Description:**       | Refund of transation failed     
-| **Actors:**            | Owner / Customer
-| **Preconditions:**     | Transaction already completed
-| **Postconditions:**    | Transaction reversal failed
-| **Flow:**              | Reversal of funds not completed
-| **Alternative Flows:** | Alternative Flows
-| **Exceptions:**        | Execptions
-| **Requirements:**      | Not enough Money in owner account to complete reversal
+
 

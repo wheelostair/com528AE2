@@ -26,6 +26,7 @@ public interface ShoppingService {
         
         public void deactivateItems(String uuid);
         
-        public void removeStock();
+        public void removeStock(ShoppingItem shoppingItem, Integer amount);
+        // add parameter for quanitity of stock to remove 
 
 }

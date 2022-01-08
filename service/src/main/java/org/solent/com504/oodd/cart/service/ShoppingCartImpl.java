@@ -86,7 +86,7 @@ public class ShoppingCartImpl implements ShoppingCart {
         for (String itemUUID : itemMap.keySet()) {
             ShoppingItem shoppingCartItem = itemMap.get(itemUUID);
 
-            shoppingCartItem.setStock(-shoppingCartItem.getQuantity());
+            shoppingCartItem.setStock(shoppingCartItem.getStock()-shoppingCartItem.getQuantity());
 
         }
     }

@@ -19,6 +19,7 @@ import org.solent.com504.oodd.cart.model.dto.User;
 import org.solent.com504.oodd.cart.model.dto.UserRole;
 import org.solent.com504.oodd.cart.model.service.ShoppingCart;
 import org.solent.com504.oodd.cart.service.ShoppingCartImpl;
+import org.solent.com504.oodd.cart.service.ShoppingServiceImpl;
 import org.solent.com504.oodd.cart.model.service.ShoppingService;
 import org.solent.com504.oodd.cart.spring.service.PopulateDatabaseOnStart;
 import org.solent.com504.oodd.cart.web.WebObjectFactory;
@@ -32,7 +33,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/")
+
+
 public class MVCController {
+    
+    String reciept = "";
 
     final static Logger LOG = LogManager.getLogger(MVCController.class);
 
@@ -158,6 +163,7 @@ public class MVCController {
     }
 
     @RequestMapping(value = "/basket", method = {RequestMethod.GET, RequestMethod.POST})
+    @SuppressWarnings("empty-statement")
     public String basketCart(@RequestParam(name = "action", required = false) String action,
             @RequestParam(name = "itemName", required = false) String itemName,
             @RequestParam(name = "itemUUID", required = false) String itemUuid,
@@ -198,8 +204,9 @@ public class MVCController {
         if (action == null) {
             // do nothing but show page
         } else if ("removeItemFromCart".equals(action)) {
-            message = "removed " + itemName + " from cart";
             shoppingCart.removeItemFromCart(itemUuid);
+            message = "removed " + itemName + " from cart";
+
             LOG.debug("Item Removed");
 
         } else if ("payment".equals(action)) {
@@ -209,7 +216,7 @@ public class MVCController {
             fromCard.setIssueNumber(issueNumber);
             LOG.debug("card number: " + fromCard.getCardnumber());
 
-            BankRestClient client = new BankRestClientImpl("http://com528bank.ukwest.cloudapp.azure.com:8080/rest");
+            BankRestClient client = new BankRestClientImpl("http://com528bank.ukwest.cloudapp.azure.com:8080/bank/rest");
 
             {
                 Double amount = shoppingCart.getTotal();
@@ -217,26 +224,31 @@ public class MVCController {
                 TransactionReplyMessage result = client.transferMoney(toCard, fromCard, amount);
                 message = "Transaction" + result;
             }
+//Loop through all items in shopping cart and call remove stock of shopping service on each item
+            if (message.contains("SUCCESS")) {
+                reciept = shoppingCartItems.toString();
+                LOG.debug(reciept);
+                for (ShoppingItem shoppingCartItem : shoppingCartItems) {
+//                    shoppingService.removeStock(shoppingCartItem, shoppingCartItem.getQuantity());
+                    shoppingCart.removeItemFromCart(itemUuid);
 
-            if (message.contains("SUCCESS")) 
-            {shoppingCart.removeStock(itemName);
-            String reciept = shoppingCartItems.toString();
-            LOG.debug(reciept);
-            
-            
+                }
+                shoppingCartItems.clear();
+                shoppingCartItems.removeAll(shoppingCartItems);
+                shoppingcartTotal = 0.0;
+
             };
 
             
-
             
+
+        }
 
 //            if (BankTransaction.BankTransactionStatus == "SUCCESS") {
 //                shoppingCartItems.removeAll(shoppingCartItems);
 //            } else {
 //                message = "unknown action=" + action;
 //            }
-        }
-
         // populate model with values
         model.addAttribute(
                 "shoppingCartItems", shoppingCartItems);
@@ -252,6 +264,8 @@ public class MVCController {
 
     @RequestMapping(value = "/orders", method = {RequestMethod.GET, RequestMethod.POST})
     public String ordersCart(
+            @RequestParam(name = "itemName", required = false) String itemName,
+            @RequestParam(name = "itemUUID", required = false) String itemUuid,
             Model model, HttpSession session
     ) {
 
@@ -261,7 +275,16 @@ public class MVCController {
 
         // used to set tab selected
         model.addAttribute("selectedPage", "orders");
+        
+        String message = "";
+        String errorMessage = "";
+        String customerReciept = "";
+        
+        customerReciept = reciept;
+        
+        LOG.debug(reciept);
 
+        //add reciept model to this orders page to show reicept
         return "orders";
     }
 

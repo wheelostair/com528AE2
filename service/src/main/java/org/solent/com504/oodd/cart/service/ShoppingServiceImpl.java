@@ -122,8 +122,8 @@ public class ShoppingServiceImpl implements ShoppingService {
         
     }
     @Override
-    public void removeStock(){
+    public void removeStock(ShoppingItem shoppingItem,Integer amount){
         
-        shoppingItemCatalogRepository.removeStock("name");
+        shoppingItemCatalogRepository.removeStock(shoppingItem.getName());
     }
 };
