@@ -1,6 +1,6 @@
 # COM528_AE2
 
-For Documents please go [here](docs). These documents include project plan, test plan, design, and use cases.\
+For Documents please go [here](docs). These documents include project plan, design, and use cases.\
 
 
 ### To run using stand alone spring boot maven plugin
